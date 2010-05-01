@@ -1,4 +1,6 @@
 propel:
+  _attributes:      { package: plugins.sfNewsletter.lib.model }
+  
   content_types:
     _attributes: { phpName: ContentType }
     id: ~
@@ -28,7 +30,7 @@ propel:
       onDelete: restrict
       onUpdate: cascade
       required: true
-      type: bigint
+      type: int
     created_at: ~
     scheduled_at:
       type: timestamp

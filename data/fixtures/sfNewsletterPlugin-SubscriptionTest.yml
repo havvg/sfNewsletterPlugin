@@ -1,0 +1,65 @@
+ContentType:
+  ContentType_1:
+    name: "plain text"
+    mime_type: "text/plain"
+    
+  ContentType_2:
+    name: "HTML text"
+    mime_type: "text/html"
+    
+Newsletter:
+  Newsletter_1:
+    name: "first newsletter"
+    subject: "testing one"
+    content: "This is a plain text newsletter."     
+    content_type_id: ContentType_1
+    created_at: ~
+    scheduled_at: NULL
+    sent_at: NULL
+    
+  Newsletter_2:
+    name: "second newsletter"
+    subject: "testing two"
+    content: "This is <strong>not</strong> a plain text newsletter."     
+    content_type_id: ContentType_2
+    created_at: ~
+    scheduled_at: NULL
+    sent_at: NULL
+    
+Subscriber:
+  Subscriber_1:
+    # entered, but not activated
+    name: "first subscriber"
+    email: "subscriber-one@example.net"
+    unsubscribe_hash: "92hjk248ds23"
+    activate_hash: "892kd7823"
+    is_active: false
+    created_at: ~
+    activated_at: NULL
+  Subscriber_2:
+    # entered, but not activated
+    name: "second subscriber"
+    email: "subscriber-two@example.com"
+    unsubscribe_hash: "asd87324"
+    activate_hash: "5uhj32l4"
+    is_active: false
+    created_at: ~
+    activated_at: NULL
+  Subscriber_3:
+    # activated and unsubscribed
+    name: "third subscriber"
+    email: "subscriber-three@example.net"
+    unsubscribe_hash: "723jksdo2"
+    activate_hash: "892kd7823"
+    is_active: false
+    created_at: '2009-10-04 21:38:23'
+    activated_at: '2009-10-05 22:04:32'
+  Subscriber_4:
+    # activated and subscribed
+    name: "fourth subscriber"
+    email: "subscriber-four@example.com"
+    unsubscribe_hash: "9123hsdaa"
+    activate_hash: "7k2j3"
+    is_active: true
+    created_at: '2009-10-03 21:38:23'
+    activated_at: '2009-10-03 22:04:32'

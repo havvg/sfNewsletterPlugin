@@ -30,7 +30,7 @@ propel:
       onDelete: restrict
       onUpdate: cascade
       required: true
-      type: int
+      type: integer
     created_at: ~
     scheduled_at:
       type: timestamp

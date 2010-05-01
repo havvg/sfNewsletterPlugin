@@ -1,0 +1,60 @@
+propel:
+  content_types:
+    _attributes: { phpName: ContentType }
+    id: ~
+    name:
+      default: NULL
+      required: false
+      type: varchar(255)
+    mime_type:
+      required: true
+      type: varchar(25)
+      
+  newsletters:
+    _attributes: { phpName: Newsletter }
+    id: ~
+    name:
+      required: true
+      type: varchar(255)
+    subject:
+      required: true
+      type: varchar(255)
+    content:
+      required: true
+      type: longvarchar
+    content_type_id:
+      foreignReference: id
+      foreignTable: content_types
+      onDelete: restrict
+      onUpdate: cascade
+      required: true
+      type: bigint
+    created_at: ~
+    scheduled_at:
+      type: timestamp
+    sent_at:
+      type: timestamp
+      
+  subscribers:
+    _attributes: { phpName: Subscriber }
+    id: ~
+    name:
+      required: true
+      type: varchar(255)
+    email:
+      index: unique
+      required: true
+      type: varchar(255)
+    unsubscribe_hash:
+      required: true
+      type: varchar(255)
+    activate_hash:
+      required: true
+      type: varchar(255)
+    is_active:
+      default: false
+      required: true
+      type: boolean
+    created_at: ~
+    activated_at:
+      type: timestamp

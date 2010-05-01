@@ -1,0 +1,22 @@
+sfNewsletter plugin
+===================
+
+The `sfNewsletter` is a symfony plugin that provides basic newsletter support,
+including subscription, unsubscription, activation of new entries and a task
+to actually send newsletters.
+
+Usage
+-----
+
+There are no assets used. You only have to activate the plugin.
+
+Libraries
+---------
+
+  * SwiftMailer
+    
+License
+-------
+
+For detailed license information please view the LICENSE file and the included
+license information of all libraries.

@@ -1,5 +1,5 @@
 propel:
-  _attributes:      { package: plugins.sfNewsletter.lib.model }
+  _attributes:      { package: plugins.sfNewsletterPlugin.lib.model }
   
   content_types:
     _attributes: { phpName: ContentType }

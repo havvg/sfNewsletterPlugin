@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . '/../bootstrap/unit.php');
 # load fixtures of this plugin
 $propelData->loadData(sfConfig::get('sf_plugins_dir') . '/sfNewsletterPlugin/data/fixtures');
 
-$limeTest = new lime_test(12, new lime_output_color());
+$limeTest = new lime_test(20, new lime_output_color());
 
 $subscriber = SubscriberPeer::retrieveSubscribed();
 $limeTest->is(count($subscriber), 1, 'Count of active subscriptions.');
@@ -30,13 +30,18 @@ $limeTest->is($subscriber->getName(), 'third subscriber', 'Retrieved by email.')
 
 try
 {
-  SubscriberPeer::retrieveByEmail(1);
+  $tmp = SubscriberPeer::retrieveByEmail(1);
   $limeTest->error('Invalid email provided.');
 }
 catch (InvalidArgumentException $e)
 {
   $limeTest->pass('InvalidArgumentException caught on invalid email.');
 }
+
+$swiftAddress = $subscriber->getSwiftAddress();
+$limeTest->isa_ok($swiftAddress, 'Swift_Address', 'Got Swift_Address.');
+$limeTest->is($swiftAddress->getName(), $subscriber->getName(), 'Names match.');
+$limeTest->is($swiftAddress->getAddress(), $subscriber->getEmail(), 'Emails match.');
 
 $subscriber = SubscriberPeer::retrieveByEmail('subscriber-one@example.net');
 $limeTest->isa_ok($subscriber, 'Subscriber', 'Found Subscriber.');
@@ -46,3 +51,13 @@ $subscriber->activate();
 $limeTest->ok($subscriber->isSubscribed(), 'Is now subscribed.');
 $subscriber->unsubscribe();
 $limeTest->isnt($subscriber->isSubscribed(), true, 'Is now unsubscribed.');
+
+$swiftAddress = $subscriber->getSwiftAddress();
+$limeTest->isa_ok($swiftAddress, 'Swift_Address', 'Got Swift_Address.');
+$limeTest->is($swiftAddress->getName(), $subscriber->getName(), 'Names match.');
+$limeTest->is($swiftAddress->getAddress(), $subscriber->getEmail(), 'Emails match.');
+
+$subscriber->setEmail('another@example.com')->setName('fake name');
+$swiftAddress = $subscriber->getSwiftAddress();
+$limeTest->is($swiftAddress->getName(), 'fake name', 'Names match.');
+$limeTest->is($swiftAddress->getAddress(), 'another@example.com', 'Emails match.');

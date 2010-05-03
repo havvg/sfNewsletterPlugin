@@ -16,6 +16,7 @@ propel:
     _attributes: { phpName: Newsletter }
     id: ~
     name:
+      index: unique
       required: true
       type: varchar(255)
     subject:

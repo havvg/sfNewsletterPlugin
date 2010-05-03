@@ -10,10 +10,22 @@ Usage
 
 There are no assets used. You only have to activate the plugin.
 
+Configuration
+-------------
+
+However you have to setup a small bit of configuration to get this plugin 
+working. In settings.yml add this line:
+
+    newsletterplugin_from: email@example.com
+    
+The mail address from which the newsletters are sent. 
+This email will also receive any newsletter that is sent.
+
 Libraries
 ---------
 
-  * SwiftMailer
+  * Swift Mailer
+    * Tested with version 3.3.3 at revision 807.
     
 License
 -------

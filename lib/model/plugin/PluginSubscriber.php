@@ -58,4 +58,20 @@ class PluginSubscriber extends BaseSubscriber
 
     return $address[$this->getId()];
   }
+
+  /**
+   * Applies default values to this object.
+   *
+   * @return void
+   */
+  public function applyDefaultValues()
+  {
+    parent::applyDefaultValues();
+
+    if ($this->isNew())
+    {
+      $this->setActivateHash(sha1(uniqid('activate', true)));
+      $this->setUnsubscribeHash(sha1(uniqid('unsubscribe', true)));
+    }
+  }
 }

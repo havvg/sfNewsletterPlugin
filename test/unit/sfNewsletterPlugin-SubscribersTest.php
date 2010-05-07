@@ -4,7 +4,13 @@ require_once(dirname(__FILE__) . '/../bootstrap/unit.php');
 # load fixtures of this plugin
 $propelData->loadData(sfConfig::get('sf_plugins_dir') . '/sfNewsletterPlugin/data/fixtures');
 
-$limeTest = new lime_test(20, new lime_output_color());
+$limeTest = new lime_test(22, new lime_output_color());
+
+$subscriber = new Subscriber();
+$activateHash = $subscriber->getActivateHash();
+$unsubscribeHash = $subscriber->getUnsubscribeHash();
+$limeTest->ok(!empty($activateHash), 'Activate hash generated.');
+$limeTest->ok(!empty($unsubscribeHash), 'Unsubscribe hash generated.');
 
 $subscriber = SubscriberPeer::retrieveSubscribed();
 $limeTest->is(count($subscriber), 1, 'Count of active subscriptions.');

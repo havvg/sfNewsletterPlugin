@@ -2,12 +2,6 @@
 
 class SendScheduledNewsletterTask extends sfBaseTask
 {
-  const EXCEPTION_NO_SENDER = 'There is no sender email configured.';
-
-  const EXCEPTION_INVALID_SENDER = 'The configured sender email is invalid.';
-
-  const EXCEPTION_SWIFT_ERROR = 'An error occured sending the email.';
-
   protected function configure()
   {
     $this->addOptions(array(
@@ -50,20 +44,14 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
 
-    $from = sfConfig::get('sf_newsletterplugin_from', false);
-
-    if ($from === false)
+    try
     {
-      $this->logSection($this->name, self::EXCEPTION_NO_SENDER, 30, 'ERROR');
-      throw new InvalidArgumentException(self::EXCEPTION_NO_SENDER);
+      $from = sfNewsletterPluginConfiguration::getFromEmail();
     }
-
-    $validator = new sfEmailValidator(null);
-    $error = false;
-    if (!$validator->execute($from, $error))
+    catch (InvalidArgumentException $e)
     {
-      $this->logSection($this->name, self::EXCEPTION_INVALID_SENDER, null, 'ERROR');
-      throw new InvalidArgumentException(self::EXCEPTION_INVALID_SENDER);
+      $this->logSection($this->name, $e->getMessage(), 30, 'ERROR');
+      throw $e;
     }
 
     $newsletters = NewsletterPeer::retrieveScheduled(new DateTime($options['schedule']));
@@ -93,13 +81,13 @@ EOF;
 
           if ($sent < count($recipientList))
           {
-            $this->logSection($this->name, sprintf(self::EXCEPTION_SWIFT_ERROR . ' Error: Email has not reached all recipients. Successfully sent to %d of %d recipients.', $sent, count($recipientList)), null, 'ERROR');
+            $this->logSection($this->name, sprintf(sfNewsletterPluginConfiguration::EXCEPTION_SWIFT_ERROR . ' Error: Email has not reached all recipients. Successfully sent to %d of %d recipients.', $sent, count($recipientList)), null, 'ERROR');
           }
         }
         catch (Exception $e)
         {
           $mailer->disconnect();
-          $this->logSection($this->name, self::EXCEPTION_SWIFT_ERROR . ' Error: ' . $e->getMessage(), null, 'ERROR');
+          $this->logSection($this->name, sfNewsletterPluginConfiguration::EXCEPTION_SWIFT_ERROR . ' Error: ' . $e->getMessage(), null, 'ERROR');
         }
       }
       catch (RuntimeException $e)

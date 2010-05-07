@@ -14,7 +14,7 @@ try
 }
 catch (InvalidArgumentException $e)
 {
-  $limeTest->is($e->getMessage(), SendScheduledNewsletterTask::EXCEPTION_NO_SENDER, 'Caught correct Exception.');
+  $limeTest->is($e->getMessage(), sfNewsletterPluginConfiguration::EXCEPTION_NO_SENDER, 'Caught correct Exception.');
 }
 
 sfConfig::set('sf_newsletterplugin_from', 'invalid-email');
@@ -25,7 +25,7 @@ try
 }
 catch (InvalidArgumentException $e)
 {
-  $limeTest->like($e->getMessage(), '/' . SendScheduledNewsletterTask::EXCEPTION_INVALID_SENDER . '/', 'Caught correct Exception.');
+  $limeTest->like($e->getMessage(), '/' . sfNewsletterPluginConfiguration::EXCEPTION_INVALID_SENDER . '/', 'Caught correct Exception.');
 }
 
 sfConfig::set('sf_newsletterplugin_from', 'email@example.com');
@@ -40,6 +40,6 @@ $limeTest->is(count(NewsletterPeer::retrieveScheduled(new DateTime('-6 hours')))
 
 $task->run(array(), array('schedule="-6 hours"'));
 $logs = $logger->getLogEntries();
-$limeTest->unlike($logs[3], '/' . SendScheduledNewsletterTask::EXCEPTION_SWIFT_ERROR . '/', 'Email sent successfully.');
+$limeTest->unlike($logs[3], '/' . sfNewsletterPluginConfiguration::EXCEPTION_SWIFT_ERROR . '/', 'Email sent successfully.');
 
 // @todo Add test checking POP3 to verify the email really got there!

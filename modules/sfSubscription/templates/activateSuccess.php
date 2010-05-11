@@ -1,0 +1,1 @@
+<p><?php echo __('Your email address has been verified.') ?></p>

@@ -21,6 +21,11 @@ working. In settings.yml add this line:
 The mail address from which the newsletters are sent. 
 This email will also receive any newsletter that is sent.
 
+In app.yml you may want to prevent the plugin from registering its default
+routes. If disabled, you have to add the specific routes yourself.
+
+    newsletterplugin_routes_register: false
+
 Libraries
 ---------
 

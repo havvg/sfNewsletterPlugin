@@ -6,6 +6,7 @@ $propelData->loadData(sfConfig::get('sf_plugins_dir') . '/sfNewsletterPlugin/dat
 
 $limeTest = new lime_test(6, new lime_output_color());
 
+sfConfig::set('sf_newsletterplugin_from', '');
 $task = new SendScheduledNewsletterTask($dispatcher, $formatter);
 try
 {

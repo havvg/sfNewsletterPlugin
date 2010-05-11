@@ -35,7 +35,7 @@ class sfNewsletterPluginConfiguration extends sfPluginConfiguration
   {
     $from = sfConfig::get('sf_newsletterplugin_from', false);
 
-    if ($from === false)
+    if ($from === false || empty($from))
     {
       throw new InvalidArgumentException(self::EXCEPTION_NO_SENDER);
     }

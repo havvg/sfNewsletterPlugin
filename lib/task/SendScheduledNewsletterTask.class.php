@@ -88,11 +88,13 @@ EOF;
         {
           $mailer->disconnect();
           $this->logSection($this->name, sfNewsletterPluginConfiguration::EXCEPTION_SWIFT_ERROR . ' Error: ' . $e->getMessage(), null, 'ERROR');
+          throw $e;
         }
       }
       catch (RuntimeException $e)
       {
         $this->logSection($this->name, $e->getMessage());
+        throw $e;
       }
     }
   }

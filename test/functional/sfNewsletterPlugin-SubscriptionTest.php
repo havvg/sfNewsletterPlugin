@@ -7,6 +7,9 @@ $propelData->loadData(sfConfig::get('sf_plugins_dir') . '/sfNewsletterPlugin/dat
 $browser = new sfTestFunctional(new sfBrowser());
 $limeTest = $browser->test();
 
+$browser->getAndCheck('sfSubscription', 'subscribe', '/newsletter/subscription', 200);
+$browser->responseContains(sfSubscribeForm::PARAMETER_NAME);
+
 $name = 'A valid username';
 $email = 'valid-email@example.com';
 $postData = array('name' => $name, 'email' => $email);

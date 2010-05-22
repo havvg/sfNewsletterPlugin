@@ -6,8 +6,6 @@ class PluginSubscribeForm extends BaseFormPropel
 
   public function configure()
   {
-    $this->widgetSchema->setNameFormat(self::PARAMETER_NAME . '[%s]');
-
     $this->setWidgets(array(
       'name' => new sfWidgetFormInput(),
       'email' => new sfWidgetFormInput(),
@@ -20,6 +18,8 @@ class PluginSubscribeForm extends BaseFormPropel
     ));
 
     $this->validatorSchema->setPostValidator(new sfValidatorPropelUnique(array('model' => 'Subscriber', 'column' => 'email', 'required' => true)));
+
+    $this->widgetSchema->setNameFormat(self::PARAMETER_NAME . '[%s]');
   }
 
   /**

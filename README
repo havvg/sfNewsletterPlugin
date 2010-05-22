@@ -8,7 +8,7 @@ to actually send newsletters.
 Usage
 -----
 
-There are no assets used. You only have to activate the plugin.
+There are no assets used. You only have to activate the plugin and its modules.
 
 Configuration
 -------------
@@ -18,13 +18,18 @@ working. In settings.yml add this line:
 
     newsletterplugin_from: email@example.com
     
-The mail address from which the newsletters are sent. 
+The mail address from which the newsletters are sent.
 This email will also receive any newsletter that is sent.
 
 In app.yml you may want to prevent the plugin from registering its default
 routes. If disabled, you have to add the specific routes yourself.
 
     newsletterplugin_routes_register: false
+    
+Additional configuration items in settings.yml
+
+  * newsletter_plugin_activation_mail_subject: 'Newsletter Subscription'
+    The subject of the activation mail sent to verify the address owner. Defaults to 'Newsletter Subscription'.
 
 Libraries
 ---------

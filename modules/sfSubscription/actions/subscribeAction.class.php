@@ -45,12 +45,25 @@ class subscribeAction extends sfAction
       catch (InvalidArgumentException $e)
       {
         $this->errorType = self::ERROR_TYPE_CONFIG;
+        $this->errorMessage = $e->getMessage();
+
+        if ($this->form->getObject())
+        {
+          $this->form->getObject()->delete();
+        }
+
         return sfView::ERROR;
       }
       catch (PropelException $e)
       {
         $this->errorType = self::ERROR_TYPE_DATABASE;
         $this->errorMessage = $e->getMessage();
+
+        if ($this->form->getObject())
+        {
+          $this->form->getObject()->delete();
+        }
+
         return sfView::ERROR;
       }
     }
@@ -75,7 +88,7 @@ class subscribeAction extends sfAction
       $from = sfNewsletterPluginConfiguration::getFromEmail();
 
       $mailer = new Swift(new Swift_Connection_NativeMail());
-      $message = new Swift_Message('Newsletter Subscription', $this->getPartial('activation_mail', array('subscriber' => $subscriber)), 'text/html');
+      $message = new Swift_Message(sfConfig::get('sf_newsletter_plugin_activation_mail_subject', 'Newsletter Subscription'), $this->getPartial('activation_mail', array('subscriber' => $subscriber)), 'text/html');
 
       $sent = $mailer->send($message, $subscriber->getEmail(), $from);
       $mailer->disconnect();
